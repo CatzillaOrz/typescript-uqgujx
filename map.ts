@@ -1,12 +1,13 @@
-// import AMapLoader from '@amap/amap-jsapi-loader';
-declare var AMapLoader: any
+declare var AMapLoader: any;
 export default class GMap {
   readonly key = '422c2369d0bc45fb6bd97194626adf20';
   map = {};
 
   private static instance: GMap;
   districtSearch;
-   constructor() {}
+  constructor() {
+    
+  }
 
   static getInstance() {
     if (!GMap.instance) {
@@ -34,19 +35,6 @@ export default class GMap {
         this.map = new AMap.Map('container', {
           zoom: 12,
           center: [116.39, 39.9],
-        });
-
-        var districtSearch = new AMap.DistrictSearch({
-          // 关键字对应的行政区级别，country表示国家
-          level: 'country',
-          //  显示下级行政区级数，1表示返回下一级行政区
-          subdistrict: 1,
-        });
-
-        // 搜索所有省/直辖市信息
-        districtSearch.search('中国', function (status, result) {
-          // 查询成功时，result即为对应的行政区信息
-          console.log(result);
         });
       })
       .catch((e) => {
