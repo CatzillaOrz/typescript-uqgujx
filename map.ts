@@ -2,7 +2,7 @@ import AMapLoader from '@amap/amap-jsapi-loader';
 
 export default class GMap {
   readonly key = '422c2369d0bc45fb6bd97194626adf20';
-  private map;
+  map = {};
 
   private static instance: GMap;
   districtSearch;
@@ -19,7 +19,7 @@ export default class GMap {
     AMapLoader.load({
       key: this.key, // 申请好的Web端开发者Key，首次调用 load 时必填
       version: '2.0', // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-      plugins: [], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+      plugins: ['AMap.DistrictSearch'], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
       AMapUI: {
         // 是否加载 AMapUI，缺省不加载
         version: '1.1', // AMapUI 版本
