@@ -16,6 +16,7 @@ export default class GMap {
     return this.instance;
   }
 
+  @AutoBind
   initMap() {
     AMapLoader.load({
       key: this.key, // 申请好的Web端开发者Key，首次调用 load 时必填
