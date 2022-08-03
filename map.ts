@@ -3,7 +3,8 @@ import { AutoBind } from './src/decorators/autobind';
 
 export default class GMap {
   readonly key = '422c2369d0bc45fb6bd97194626adf20';
-  map = {};
+  map: any = {};
+  AMap: any = {};
 
   private static instance: GMap;
   districtSearch;
@@ -37,19 +38,42 @@ export default class GMap {
           zoom: 12,
           center: [116.39, 39.9],
         });
-
-        AMap.plugin(
-          'AMap.ToolBar',
-
-          function () {
-            //异步加载插件
-            var toolbar = new AMap.ToolBar();
-            this.map.addControl(toolbar);
-          }.bind(this)
-        );
+        this.AMap = AMap;
+        this.initMapPlugin();
       })
       .catch((e) => {
         console.error(e); //加载错误提示
       });
+  }
+
+  @AutoBind
+  private initMapPlugin() {
+    this.AMap.plugin(
+      'AMap.ToolBar',
+
+      function () {
+        //异步加载插件
+        var toolbar = new this.AMap.ToolBar();
+        this.map.addControl(toolbar);
+        this.transformContainerLngLat();
+      }.bind(this)
+    );
+  }
+
+  
+  /*
+   *  1. 容器坐标转经纬度坐标 map.containerToLnglat
+   */
+  @AutoBind
+  private transformContainerLngLat() {
+    // 容器坐标，原点为左上角
+    var px = 600;
+    var py = 300;
+
+    // 构造成 Pixel 对象后传入
+    var pixel = new this.AMap.Pixel(px, py);
+    var lnglat = this.map.containerToLngLat(pixel); // 获得 LngLat 对象
+    console.log(lnglat)
+    
   }
 }
