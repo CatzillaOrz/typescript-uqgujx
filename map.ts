@@ -1,13 +1,13 @@
 declare var AMapLoader: any;
+import { AutoBind } from './src/decorators/autobind';
+
 export default class GMap {
   readonly key = '422c2369d0bc45fb6bd97194626adf20';
   map = {};
 
   private static instance: GMap;
   districtSearch;
-  constructor() {
-    
-  }
+  constructor() {}
 
   static getInstance() {
     if (!GMap.instance) {
@@ -36,6 +36,16 @@ export default class GMap {
           zoom: 12,
           center: [116.39, 39.9],
         });
+
+        AMap.plugin(
+          'AMap.ToolBar',
+
+          function () {
+            //异步加载插件
+            var toolbar = new AMap.ToolBar();
+            this.map.addControl(toolbar);
+          }.bind(this)
+        );
       })
       .catch((e) => {
         console.error(e); //加载错误提示
