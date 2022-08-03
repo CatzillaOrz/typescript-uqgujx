@@ -1,4 +1,4 @@
-declare var AMapLoader: any;
+declare let AMapLoader: any;
 import { AutoBind } from './src/decorators/autobind';
 
 export default class GMap {
@@ -53,27 +53,35 @@ export default class GMap {
 
       function () {
         //异步加载插件
-        var toolbar = new this.AMap.ToolBar();
+        let toolbar = new this.AMap.ToolBar();
         this.map.addControl(toolbar);
         this.transformContainerLngLat();
       }.bind(this)
     );
   }
 
-  
   /*
    *  1. 容器坐标转经纬度坐标 map.containerToLnglat
+   *  2. 经纬度坐标转容器坐标 map.lngLatToContainer
    */
   @AutoBind
   private transformContainerLngLat() {
     // 容器坐标，原点为左上角
-    var px = 600;
-    var py = 300;
+    let px = 600;
+    let py = 300;
 
     // 构造成 Pixel 对象后传入
-    var pixel = new this.AMap.Pixel(px, py);
-    var lnglat = this.map.containerToLngLat(pixel); // 获得 LngLat 对象
-    console.log(lnglat)
-    
+    let pixel = new this.AMap.Pixel(px, py);
+    let lnglat = this.map.containerToLngLat(pixel); // 获得 LngLat 对象
+    console.log(lnglat);
+
+    // 地理经纬度坐标
+    let lon = 116.4;
+    let lat = 39.9;
+
+    // 构造成 LngLat 对象后传入
+    let lnglat2 = new this.AMap.LngLat(lon, lat);
+    let pixel2 = this.map.lngLatToContainer(lnglat2); // 获得 Pixel 对象
+    console.log(pixel2);
   }
 }
